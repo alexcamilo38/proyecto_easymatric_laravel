@@ -22,7 +22,8 @@ class RequirementController extends Controller
     }
     public function salida(Request $request){
        //si se le pone el  return Requirement::create($request->all()); muestra los datos escritos
-        return Requirement::create($request->all());
+        Requirement::create($request->all());
+        return redirect()->route('requirements.index')->with('success', 'Requisito registrado exitosamente');
 
     }
 

@@ -29,7 +29,7 @@ class StudentController extends Controller
     public function salida(Request $request)
     {
         Student::create($request->all());
-        return redirect()->route('students.index');
+       return redirect()->route('students.index')->with('success', 'Estudiante registrado exitosamente');
     }
 
     public function show($id)

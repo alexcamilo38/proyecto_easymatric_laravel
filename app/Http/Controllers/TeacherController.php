@@ -28,6 +28,8 @@ class TeacherController extends Controller
 
     public function salida(Request $request){
         Teacher::create($request->all());
+        return redirect()->route('teachers.index')->with('success', 'Profesor registrado exitosamente');
+
     }
 
     public function show ($id){

@@ -23,6 +23,7 @@ class InstitutionController extends Controller
     public function salida(Request $request){
        //si se le pone el  return Institution::create($request->all()); muestra los datos escritos
         Institution::create($request->all());
+        return redirect()->route('institutions.index')->with('success', 'Institución registrada exitosamente');
 
     }
 

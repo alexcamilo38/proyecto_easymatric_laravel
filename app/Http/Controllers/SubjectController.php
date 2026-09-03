@@ -29,6 +29,7 @@ class SubjectController extends Controller
     public function salida(Request $request)
     {
         Subject::create($request->all());
+        return redirect()->route('subjects.index')->with('success', 'Asignatura registrada exitosamente');
     }
 
     public function show($id)

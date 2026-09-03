@@ -22,7 +22,9 @@ class RolController extends Controller
 
     public function salida(Request $request){
        //si se le pone el  return Rol::create($request->all()); muestra los datos escritos
-       return  Rol::create($request->all());
+        Rol::create($request->all());
+        return redirect()->route('rols.index')->with('success', 'Registro exitoso');
+
 
     }
 

@@ -26,6 +26,7 @@ class UserSystemController extends Controller
 
     public function salida(Request $request){
         UserSystem::create($request->all());
+        return redirect()->route('user_systems.index')->with('success', 'Usuario registrado exitosamente');
     }
 
     public function show ($id){

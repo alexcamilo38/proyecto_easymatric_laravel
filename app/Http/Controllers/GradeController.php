@@ -28,7 +28,9 @@ class GradeController extends Controller
 
     public function salida(Request $request)
     {
-       return Grade::create($request->all());
+        Grade::create($request->all());
+
+       return redirect()->route('grades.index')->with('success', 'Calificación registrada exitosamente');
     }
 
     public function show($id)

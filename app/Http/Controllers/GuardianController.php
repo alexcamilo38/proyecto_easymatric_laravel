@@ -22,8 +22,8 @@ class GuardianController extends Controller
     }
     public function salida(Request $request){
        //si se le pone el  return Guardian::create($request->all()); muestra los datos escritos
-        return Guardian::create($request->all());
-
+        Guardian::create($request->all());
+        return redirect()->route('guardians.index')->with('success', 'Registro exitoso');
     }
 
 

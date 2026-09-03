@@ -26,7 +26,9 @@ class ModuleController extends Controller
 
     public function salida(Request $request)
     {
-       return  Module::create($request->all());
+       Module::create($request->all());
+       return redirect()->route('modules.index')->with('success', 'Módulo registrado exitosamente');
+
     }
 
     public function show($id)
