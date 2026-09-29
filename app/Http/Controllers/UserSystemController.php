@@ -13,7 +13,7 @@ class UserSystemController extends Controller
 
         $userSystems=UserSystem::all();
 
-        return view('user_systems.index',compact('userSystems'));
+        return response()->json($userSystems);
 
 
     }
@@ -25,14 +25,15 @@ class UserSystemController extends Controller
     }
 
     public function salida(Request $request){
-        UserSystem::create($request->all());
-        return redirect()->route('user_systems.index')->with('success', 'Usuario registrado exitosamente');
+        $userSystems=UserSystem::create($request->all());
+        //return redirect()->route('user_systems.index')->with('success', 'Usuario registrado exitosamente');
+        return response()->json($userSystems);
     }
 
     public function show ($id){
 
         $userSystem=UserSystem::find($id);
-        return view('user_systems.show',compact('userSystem'));
+        return response()->json($userSystem);
 
 
     }
@@ -43,7 +44,7 @@ class UserSystemController extends Controller
         $rols = Rol::all(); 
 
         // Enviamos todo a la vista con compact
-        return view('user_systems.edit', compact('userSystem', 'rols'));
+        return response()->json(compact('userSystem', 'rols'));
     }
 
     public function update(Request $request, UserSystem $userSystem)
@@ -51,13 +52,13 @@ class UserSystemController extends Controller
         //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
         $userSystem->update($request->all());
 
-        return redirect()->route('user_systems.index');
+        return response()->json($userSystem);
     }
 
     //Destroy se encuentra el registro para luego eliminarlo..
     public function destroy(UserSystem $userSystem)
     {
         $userSystem->delete();
-        return redirect()->route('user_systems.index');
+        return response()->json($userSystem);
     }
 }

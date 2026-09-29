@@ -14,7 +14,7 @@ class TeacherController extends Controller
 
         $teachers=Teacher::all();
 
-        return view('teachers.index',compact('teachers'));
+        return response()->json($teachers);
 
 
     }
@@ -27,15 +27,16 @@ class TeacherController extends Controller
     }
 
     public function salida(Request $request){
-        Teacher::create($request->all());
-        return redirect()->route('teachers.index')->with('success', 'Profesor registrado exitosamente');
+        $teachers=Teacher::create($request->all());
+        //return redirect()->route('teachers.index')->with('success', 'Profesor registrado exitosamente');
+        return response()->json($teachers);
 
     }
 
     public function show ($id){
 
         $teacher=Teacher::find($id);
-        return view('teachers.show',compact('teacher'));
+        return response()->json($teacher);
 
 
     }
@@ -47,7 +48,7 @@ class TeacherController extends Controller
         $institutions = Institution::all(); 
 
         // Enviamos todo a la vista con compact
-        return view('teachers.edit', compact('teacher', 'userSystems', 'institutions'));
+       return response()->json(compact('teacher', 'userSystems', 'institutions'));
     }
 
     public function update(Request $request, Teacher $teacher)
@@ -55,13 +56,13 @@ class TeacherController extends Controller
         //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
         $teacher->update($request->all());
 
-        return redirect()->route('teachers.index');
+        return response()->json($teacher);
     }
 
     //Destroy se encuentra el registro para luego eliminarlo..
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
-        return redirect()->route('teachers.index');
+        return response()->json($teacher);
     }
 }

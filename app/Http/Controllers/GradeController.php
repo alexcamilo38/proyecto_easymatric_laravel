@@ -14,7 +14,7 @@ class GradeController extends Controller
     {
         $grades = Grade::all();
 
-        return view('grades.index', compact('grades'));
+        return response()->json($grades);
     }
 
     public function create()
@@ -28,16 +28,17 @@ class GradeController extends Controller
 
     public function salida(Request $request)
     {
-        Grade::create($request->all());
+        $grades=Grade::create($request->all());
 
-       return redirect()->route('grades.index')->with('success', 'Calificación registrada exitosamente');
+       //return redirect()->route('grades.index')->with('success', 'Calificación registrada exitosamente');
+       return response()->json($grades);
     }
 
     public function show($id)
     {
         $grades = Grade::find($id);
 
-        return view('grades.show', compact('grades'));
+        return response()->json($grades);
     }
 
     public function edit(Grade $grades)
@@ -47,7 +48,7 @@ class GradeController extends Controller
         $students = Student::all();
 
         // Enviamos todo a la vista con compact
-        return view('grades.edit', compact('grades', 'subjects', 'students'));
+        return response()->json(compact('grades', 'subjects', 'students'));
     }
 
     public function update(Request $request, Grade $grades)
@@ -55,7 +56,7 @@ class GradeController extends Controller
         // Método más sencillo sin necesidad de poner todo lo que pertenece a esa tabla
         $grades->update($request->all());
 
-        return redirect()->route('grades.index');
+       return response()->json($grades);
     }
 
     // Destroy se encuentra el registro para luego eliminarlo..
@@ -63,7 +64,7 @@ class GradeController extends Controller
     {
         $grades->delete();
 
-        return redirect()->route('grades.index');
+       return response()->json($grades);
     }
 
 }

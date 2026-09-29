@@ -13,7 +13,7 @@ class ModuleController extends Controller
     {
         $modules = Module::all();
 
-        return view('modules.index', compact('modules'));
+        return response()->json($modules);
     }
 
     public function create()
@@ -26,8 +26,9 @@ class ModuleController extends Controller
 
     public function salida(Request $request)
     {
-       Module::create($request->all());
-       return redirect()->route('modules.index')->with('success', 'Módulo registrado exitosamente');
+       $modules=Module::create($request->all());
+       //return redirect()->route('modules.index')->with('success', 'Módulo registrado exitosamente');
+       return response()->json($modules);
 
     }
 
@@ -35,7 +36,7 @@ class ModuleController extends Controller
     {
         $modules = Module::find($id);
 
-        return view('modules.show', compact('modules'));
+        return response()->json($modules);
     }
 
     public function edit(Module $modules)
@@ -44,7 +45,7 @@ class ModuleController extends Controller
         $teachers = Teacher::all();
 
         // Enviamos todo a la vista con compact
-        return view('modules.edit', compact('modules', 'teachers'));
+        return response()->json(compact('modules', 'teachers'));
     }
 
     public function update(Request $request, Module $modules)
@@ -52,7 +53,7 @@ class ModuleController extends Controller
         // Método más sencillo sin necesidad de poner todo lo que pertenece a esa tabla
         $modules->update($request->all());
 
-        return redirect()->route('modules.index');
+        return response()->json($modules);
     }
 
     // Destroy se encuentra el registro para luego eliminarlo..
@@ -60,6 +61,6 @@ class ModuleController extends Controller
     {
         $modules->delete();
 
-        return redirect()->route('modules.index');
+        return response()->json($modules);
     }
 }

@@ -12,7 +12,7 @@ class InstitutionController extends Controller
 
         $institutions=Institution::all();
 
-        return view('institutions.index',compact('institutions'));
+        return response()->json($institutions);
 
 
     }
@@ -22,8 +22,8 @@ class InstitutionController extends Controller
     }
     public function salida(Request $request){
        //si se le pone el  return Institution::create($request->all()); muestra los datos escritos
-        Institution::create($request->all());
-        return redirect()->route('institutions.index')->with('success', 'Institución registrada exitosamente');
+        $institutions=Institution::create($request->all());
+        return response()->json($institutions);
 
     }
 
@@ -32,7 +32,7 @@ class InstitutionController extends Controller
     public function show ($id){
 
      $institutions=Institution::find($id);
-       return view('institutions.show',compact('institutions'));
+     return response()->json($institutions);
 
 
     }
@@ -48,7 +48,7 @@ class InstitutionController extends Controller
     //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
         $institutions->update($request->all());
 
-        return redirect()->route('institutions.index');
+        return response()->json($institutions);
     }
 
      
@@ -56,6 +56,6 @@ class InstitutionController extends Controller
     public function destroy(Institution $institutions)
     {
         $institutions->delete();
-        return redirect()->route('institutions.index');
+        return response()->json($institutions);
     }
 }

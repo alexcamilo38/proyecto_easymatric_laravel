@@ -14,7 +14,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with(['userSystem', 'guardian', 'institution'])->get();
-        return view('students.index', compact('students'));
+        return response()->json($students);
     }
 
     public function create()
@@ -28,14 +28,16 @@ class StudentController extends Controller
 
     public function salida(Request $request)
     {
-        Student::create($request->all());
-       return redirect()->route('students.index')->with('success', 'Estudiante registrado exitosamente');
+        $students=Student::create($request->all());
+       //return redirect()->route('students.index')->with('success', 'Estudiante registrado exitosamente');
+        return response()->json($students);
+    
     }
 
     public function show($id)
     {
         $student = Student::find($id);
-        return view('students.show', compact('student'));
+        return response()->json($student);
     }
 
     public function edit(Student $student)
@@ -44,18 +46,18 @@ class StudentController extends Controller
         $guardians = Guardian::all();
         $institutions = Institution::all();
 
-        return view('students.edit', compact('student', 'userSystems', 'guardians', 'institutions'));
+        return response()->json(compact('student', 'userSystems', 'guardians', 'institutions'));
     }
 
     public function update(Request $request, Student $student)
     {
         $student->update($request->all());
-        return redirect()->route('students.index');
+        return response()->json($student);
     }
 
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route('students.index');
+        return response()->json($student);
     }
 }

@@ -15,7 +15,7 @@ class EnrollmentController extends Controller
     {
         $enrollments = Enrollment::all();
 
-        return view('enrollments.index', compact('enrollments'));
+        return response()->json($enrollments);
     }
 
     public function create()
@@ -30,15 +30,16 @@ class EnrollmentController extends Controller
 
     public function salida(Request $request)
     {
-        Enrollment::create($request->all());
-        return redirect()->route('enrollments.index')->with('success', 'Matrícula registrada con éxito');
+        $enrollments=Enrollment::create($request->all());
+       //return redirect()->route('enrollments.index')->with('success', 'Matrícula registrada con éxito');
+       return response()->json($enrollments);
     }
 
     public function show($id)
     {
         $enrollments = Enrollment::find($id);
 
-        return view('enrollments.show', compact('enrollments'));
+        return response()->json($enrollments);
     }
 
     public function edit(Enrollment $enrollments)
@@ -49,7 +50,7 @@ class EnrollmentController extends Controller
         $requirements = Requirement::all();
 
         // Enviamos todo a la vista con compact
-        return view('enrollments.edit', compact('enrollments', 'students', 'modules', 'requirements'));
+        return response()->json(compact('enrollments', 'students', 'modules', 'requirements'));
     }
 
     public function update(Request $request, Enrollment $enrollments)
@@ -57,7 +58,7 @@ class EnrollmentController extends Controller
         // Método más sencillo sin necesidad de poner todo lo que pertenece a esa tabla
         $enrollments->update($request->all());
 
-        return redirect()->route('enrollments.index');
+        return response()->json($enrollments);
     }
 
     // Destroy se encuentra el registro para luego eliminarlo..
@@ -65,6 +66,6 @@ class EnrollmentController extends Controller
     {
         $enrollments->delete();
 
-        return redirect()->route('enrollments.index');
+        return response()->json($enrollments);
     }
 }

@@ -12,7 +12,7 @@ class RolController extends Controller
 
         $rols=Rol::all();
 
-        return view('rols.index',compact('rols'));
+        return response()->json($rols);
 
     }
 
@@ -22,8 +22,8 @@ class RolController extends Controller
 
     public function salida(Request $request){
        //si se le pone el  return Rol::create($request->all()); muestra los datos escritos
-        Rol::create($request->all());
-        return redirect()->route('rols.index')->with('success', 'Registro exitoso');
+        $rols = Rol::create($request->all());
+        return response()->json($rols);
 
 
     }
@@ -31,7 +31,7 @@ class RolController extends Controller
     public function show ($id){
 
        $rols=Rol::find($id);
-       return view('rols.show',compact('rols'));
+       return response()->json($rols);
 
     }
 
@@ -39,7 +39,7 @@ class RolController extends Controller
     public function edit(Rol $rols)
     { //Encuentro el Curso
 
-        return view('rols.edit', compact('rols'));
+        return response()->json($rols);
     }
 
     public function update(Request $request, Rol $rols)
@@ -47,13 +47,13 @@ class RolController extends Controller
     //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
         $rols->update($request->all());
 
-        return redirect()->route('rols.index');
+        return response()->json($rols);
     }
 
     //Destroy se encuentra el registro para luego eliminarlo..
     public function destroy(Rol $rols)
     {
         $rols->delete();
-        return redirect()->route('rols.index');
+        return response()->json($rols);
     }
 }

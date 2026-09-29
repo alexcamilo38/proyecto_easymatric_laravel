@@ -12,7 +12,7 @@ class RequirementController extends Controller
 
         $requirements=Requirement::all();
 
-        return view('requirements.index',compact('requirements'));
+        return response()->json($requirements);
 
 
     }
@@ -22,8 +22,8 @@ class RequirementController extends Controller
     }
     public function salida(Request $request){
        //si se le pone el  return Requirement::create($request->all()); muestra los datos escritos
-        Requirement::create($request->all());
-        return redirect()->route('requirements.index')->with('success', 'Requisito registrado exitosamente');
+        $requirements=Requirement::create($request->all());
+        return response()->json($requirements);
 
     }
 
@@ -32,27 +32,26 @@ class RequirementController extends Controller
     public function show ($id){
 
      $requirements=Requirement::find($id);
-       return view('requirements.show',compact('requirements'));
-
+       return response()->json($requirements);
 
     }
 
     
     public function edit(Requirement $requirements){ 
 
-        return view('requirements.edit', compact('requirements'));
+        return response()->json($requirements);
     }
     public function update(Request $request, Requirement $requirements){
     //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
         $requirements->update($request->all());
 
-        return redirect()->route('requirements.index');
+        return response()->json($requirements);
     }
 
      
       //Destroy se encuentra el registro para luego eliminarlo..
     public function destroy(Requirement $requirements) {
         $requirements->delete();
-        return redirect()->route('requirements.index');
+        return response()->json($requirements);
     }
 }

@@ -14,7 +14,7 @@ class SubjectController extends Controller
     {
         $subjects = Subject::all();
 
-        return view('subjects.index', compact('subjects'));
+        return response()->json($subjects);
     }
 
     public function create()
@@ -28,15 +28,16 @@ class SubjectController extends Controller
 
     public function salida(Request $request)
     {
-        Subject::create($request->all());
-        return redirect()->route('subjects.index')->with('success', 'Asignatura registrada exitosamente');
+        $subjects=Subject::create($request->all());
+        //return redirect()->route('subjects.index')->with('success', 'Asignatura registrada exitosamente');
+        return response()->json($subjects);
     }
 
     public function show($id)
     {
         $subjects = Subject::find($id);
 
-        return view('subjects.show', compact('subjects'));
+        return response()->json($subjects);
     }
 
     public function edit(Subject $subjects)
@@ -46,7 +47,7 @@ class SubjectController extends Controller
         $teachers = Teacher::all();
 
         // Enviamos todo a la vista con compact
-        return view('subjects.edit', compact('subjects', 'modules', 'teachers'));
+        return response()->json(compact('subjects', 'modules', 'teachers'));
     }
 
     public function update(Request $request, Subject $subjects)
@@ -54,7 +55,7 @@ class SubjectController extends Controller
         // Método más sencillo sin necesidad de poner todo lo que pertenece a esa tabla
         $subjects->update($request->all());
 
-        return redirect()->route('subjects.index');
+        return response()->json($subjects);
     }
 
     // Destroy se encuentra el registro para luego eliminarlo..
@@ -62,6 +63,6 @@ class SubjectController extends Controller
     {
         $subjects->delete();
 
-        return redirect()->route('subjects.index');
+        return response()->json($subjects);
     }
 }
