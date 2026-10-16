@@ -42,6 +42,9 @@ Route::delete('rols/{rols}',[RolController::class,'destroy'])->name('rols.destro
 Route::get('institutions/create',[InstitutionController::class,'create'])->name('institutions.create');
 Route::get('institutions/list',[InstitutionController::class,'index'])->name('institutions.index');
 Route::post('institutions/store',[InstitutionController::class,'salida'])->name('institutions.store');
+Route::get('/institutions', [InstitutionController::class, 'verInstitutions']);
+// Ruta para la consulta con relaciones
+Route::get('/instituciones-Estudiantes', [InstitutionController::class, 'verInstitucionesConEstudiantes']);
 Route::get('institutions/{id}',[InstitutionController::class,'show'])->name('institutions.show');
 Route::put('institutions/{institutions}',[InstitutionController::class,'update'])->name('institutions.update');
 Route::get('institutions/{institutions}/editar',[InstitutionController::class,'edit'])->name('institutions.edit');

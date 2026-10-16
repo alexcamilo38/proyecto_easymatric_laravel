@@ -8,36 +8,55 @@ use Illuminate\Http\Request;
 class InstitutionController extends Controller
 {
     //
-    public function index(){
+    public function index()
+    {
 
-        $institutions=Institution::all();
+        $institutions = Institution::all();
 
         return response()->json($institutions);
-
-
     }
 
-    public function create(){
+    public function create()
+    {
         return view('institutions.create');
     }
-    public function salida(Request $request){
-       //si se le pone el  return Institution::create($request->all()); muestra los datos escritos
-        $institutions=Institution::create($request->all());
+    public function salida(Request $request)
+    {
+        //si se le pone el  return Institution::create($request->all()); muestra los datos escritos
+        $institutions = Institution::create($request->all());
         return response()->json($institutions);
-
     }
 
 
-
-    public function show ($id){
-
-     $institutions=Institution::find($id);
-     return response()->json($institutions);
-
-
+    //Ver Institution
+    public function verInstitutions()
+    {
+        $institutions = Institution::find(3);
+        return response()->json($institutions);
     }
+
+    // Consulta todas las instituciones incluyendo sus estudiantes
+    public function verInstitucionesConEstudiantes()
+    {
+        // Trae las instituciones junto con la lista de sus estudiantes cargados
+        $instituciones = Institution::with('students')->get();
+
+        return response()->json([
+            'estudiantes'   => $instituciones
+        ], 200);
+    }
+
+
 
     
+    public function show($id)
+    {
+
+        $institutions = Institution::find($id);
+        return response()->json($institutions);
+    }
+
+
     public function edit(Institution $institutions)
     { //Encuentro el Curso
 
@@ -45,14 +64,14 @@ class InstitutionController extends Controller
     }
     public function update(Request $request, Institution $institutions)
     {
-    //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
+        //metodo mas sencillo sin nesecidad de poner todo lo que pertenece a esa tabla
         $institutions->update($request->all());
 
         return response()->json($institutions);
     }
 
-     
-      //Destroy se encuentra el registro para luego eliminarlo..
+
+    //Destroy se encuentra el registro para luego eliminarlo..
     public function destroy(Institution $institutions)
     {
         $institutions->delete();
